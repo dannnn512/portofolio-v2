@@ -1,6 +1,6 @@
-## Portfolio V2
+## Ziddan Aryasatya – Portfolio
 
-Modern portfolio built with Vite + React + TypeScript, styled with Tailwind and shadcn/ui.
+Personal portfolio built with Vite + React + TypeScript, styled with Tailwind and shadcn/ui.
 
 ### Tech stack
 - **Build/dev**: Vite (TS, SWC)
@@ -8,6 +8,17 @@ Modern portfolio built with Vite + React + TypeScript, styled with Tailwind and 
 - **State/Data**: TanStack Query
 - **Routing**: react-router-dom
 - **Tooling**: TypeScript, ESLint, PostCSS, Autoprefixer
+
+### Architecture
+- **SPA** built with Vite + React 18
+- **Routing** with `react-router-dom`
+- **UI** with `shadcn/ui` (Radix) and Tailwind CSS
+- **Data separation**: `src/types/**` (TypeScript types) and `src/data/**` (static content: skills, experience, projects)
+- **Assets**:
+  - Public static files in `public/**` (e.g., images, `favicon.ico`, `Resume.pdf`)
+  - Component-specific assets can live in `src/assets/**` and be imported
+- **State/async** ready via `@tanstack/react-query`
+- **Build**: Vite + SWC, PostCSS pipeline
 
 ### Package manager(s)
 This repo contains multiple lockfiles from previous setups:
@@ -77,76 +88,31 @@ postcss.config.js      # PostCSS config
 - Missing package manager: install Node.js (npm), or install pnpm/Bun and re-run the commands.
 - Port already in use: change the port with `--port` or free the port 8080.
 
-# Welcome to your Lovable project
+### Assets & Resume
+- Resume is available at `public/` and linked via the footer CTA.
+- Example public path: `/Ziddan%20Aryasatya%20Nugraha%20Resume%20V7.pdf`.
 
-## Project info
-
-**URL**: https://lovable.dev/projects/5b1d53bf-f99d-4c6e-8638-606ec2b25f0e
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/5b1d53bf-f99d-4c6e-8638-606ec2b25f0e) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/5b1d53bf-f99d-4c6e-8638-606ec2b25f0e) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### Deployment
+- Deployed on my own VPS (domain to be added).
+- Platform: Linux (Ubuntu) VPS + Docker.
+- Typical setup: build with Vite, serve `dist/` via Nginx in a Docker container, enable HTTPS at the VPS layer.
+- Build:
+  ```bash
+  npm run build
+  ```
+- VPS notes:
+  - Option A (Docker, recommended):
+    - Create a Dockerfile:
+      ```Dockerfile
+      FROM nginx:alpine
+      COPY dist /usr/share/nginx/html
+      ```
+    - Build and run on the VPS:
+      ```bash
+      docker build -t portfolio .
+      docker run -d --name portfolio -p 80:80 portfolio
+      ```
+    - Put Nginx/Caddy or a reverse proxy in front for HTTPS (443) and caching.
+  - Option B (without Docker):
+    - Copy `dist/` to `/var/www/portfolio` and point Nginx root there.
+    - Enable gzip/caching; set SPA fallback to `index.html`.
