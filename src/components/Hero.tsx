@@ -7,7 +7,7 @@ const Hero = () => {
       <div className="container mx-auto px-6 lg:px-12 xl:px-24 z-10">
         <div className="text-center space-y-8 md:space-y-10">
           {/* Glowing title */}
-          <h1 className="text-6xl md:text-8xl font-bold glow-primary animate-glow-pulse">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold glow-primary animate-glow-pulse leading-tight tracking-tight max-w-[95%] mx-auto break-words">
             <span className="bg-gradient-cyber bg-clip-text text-transparent">
               ZIDDAN ARYASATYA N
             </span>
