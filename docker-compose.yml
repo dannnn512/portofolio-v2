@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  web:
+    container_name: vite-react-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80" # akses via http://<IP_VPS>:3000
+    environment:
+      - TZ=Asia/Jakarta
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    # (opsional) batasi resource kalau VPS kecil
+    deploy:
+      resources:
+        limits:
+          cpus: "0.75"
+          memory: 256M
