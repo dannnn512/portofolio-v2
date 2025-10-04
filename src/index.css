@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Neo Cyberpunk Design System */
+    --background: 0 0% 0%;
+    --foreground: 180 100% 90%;
+
+    --card: 0 0% 5%;
+    --card-foreground: 180 100% 90%;
+
+    --popover: 0 0% 5%;
+    --popover-foreground: 180 100% 90%;
+
+    /* Neon Cyan Primary */
+    --primary: 180 100% 50%;
+    --primary-foreground: 0 0% 0%;
+
+    /* Hot Magenta Secondary */
+    --secondary: 320 100% 50%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 180 50% 60%;
+
+    /* Neon Purple Accent */
+    --accent: 280 100% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 180 100% 30%;
+    --input: 0 0% 10%;
+    --ring: 180 100% 50%;
+
+    --radius: 0.25rem;
+
+    /* Neon Green Tertiary */
+    --tertiary: 140 100% 50%;
+    --tertiary-foreground: 0 0% 0%;
+
+    /* Gradients */
+    --gradient-cyber: linear-gradient(135deg, hsl(180 100% 50%), hsl(280 100% 60%));
+    --gradient-neon: linear-gradient(90deg, hsl(180 100% 50%), hsl(320 100% 50%));
+    --gradient-pulse: linear-gradient(180deg, transparent, hsl(180 100% 50% / 0.1));
+
+    /* Glows */
+    --glow-primary: 0 0 20px hsl(180 100% 50% / 0.5), 0 0 40px hsl(180 100% 50% / 0.3);
+    --glow-secondary: 0 0 20px hsl(320 100% 50% / 0.5), 0 0 40px hsl(320 100% 50% / 0.3);
+    --glow-accent: 0 0 20px hsl(280 100% 60% / 0.5), 0 0 40px hsl(280 100% 60% / 0.3);
+
+    /* Transitions */
+    --transition-neon: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  /* Neon glow utilities */
+  .glow-primary {
+    text-shadow: var(--glow-primary);
+  }
+
+  .glow-secondary {
+    text-shadow: var(--glow-secondary);
+  }
+
+  .glow-accent {
+    text-shadow: var(--glow-accent);
+  }
+
+  .border-glow-primary {
+    box-shadow: var(--glow-primary);
+  }
+
+  .border-glow-secondary {
+    box-shadow: var(--glow-secondary);
+  }
+
+  /* Scanline effect */
+  .scanlines::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      transparent 50%, 
+      rgba(0, 255, 255, 0.03) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
