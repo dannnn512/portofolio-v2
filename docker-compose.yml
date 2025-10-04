@@ -7,18 +7,22 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:80" # akses via http://<IP_VPS>:3000
+      - "3000:80" # akses: http://<IP_VPS>:3000
     environment:
       - TZ=Asia/Jakarta
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 3
-    # (opsional) batasi resource kalau VPS kecil
-    deploy:
-      resources:
-        limits:
-          cpus: "0.75"
-          memory: 256M
+    # Limit resource (berlaku di docker compose v2.17+ dengan cgroup)
+    # Kalau versi kamu gak dukung, hapus aja bagian ini.
+    mem_limit: "256m"
+    cpus: "0.75"
+    # logging opsional biar gak bengkak
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
