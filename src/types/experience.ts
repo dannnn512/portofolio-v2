@@ -5,6 +5,8 @@ export interface Experience {
     period: string;
     description: string;
     isRecent: boolean;
+    /** e.g., "Remote", "Hybrid", "On-site" */
+    workSetting?: string;
 }
 
 

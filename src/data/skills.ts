@@ -12,6 +12,8 @@ export const skills: Skill[] = [
     "Docker",
     "Git",
     "Firebase",
+    "Linux",
+    "Rest API"
 ];
 
 

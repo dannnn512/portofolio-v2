@@ -31,7 +31,10 @@ const WorkExperience = () => {
                 <div className="bg-card border border-primary/30 p-6 rounded-sm hover:border-primary transition-colors duration-300 group-hover:border-glow-primary">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
                     <h3 className="text-xl font-bold text-primary">{exp.title}</h3>
-                    <span className="text-sm text-accent">{exp.period}</span>
+                    <div className="flex items-center gap-3">
+                      {exp.workSetting && <em className="text-xs text-muted-foreground">{exp.workSetting}</em>}
+                      <span className="text-sm text-accent">{exp.period}</span>
+                    </div>
                   </div>
                   <p className="text-secondary font-semibold mb-2">{exp.company}</p>
                   <p className="text-muted-foreground">{exp.description}</p>

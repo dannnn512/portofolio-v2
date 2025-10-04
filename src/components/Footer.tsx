@@ -9,7 +9,7 @@ const Footer = () => {
           {/* Social Links */}
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/dannnn512"
               target="_blank"
               rel="noopener noreferrer"
               className="group"
@@ -24,7 +24,7 @@ const Footer = () => {
             </a>
 
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://www.linkedin.com/in/aryaziddan/"
               target="_blank"
               rel="noopener noreferrer"
               className="group"
@@ -40,21 +40,28 @@ const Footer = () => {
           </div>
 
           {/* Resume Download */}
-          <Button
-            variant="outline"
-            className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground group transition-all duration-300 hover:border-glow-secondary"
+          <a
+            href="/Ziddan%20Aryasatya%20Nugraha%20Resume%20V7.pdf"
+            download
+            className="group"
+            aria-label="Download resume PDF"
           >
-            <Download className="mr-2 h-4 w-4 group-hover:animate-bounce" />
-            Get My Resume
-          </Button>
+            <Button
+              variant="outline"
+              className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground group transition-all duration-300 hover:border-glow-secondary"
+            >
+              <Download className="mr-2 h-4 w-4 group-hover:animate-bounce" />
+              Get My Resume
+            </Button>
+          </a>
         </div>
 
         {/* Copyright */}
         <div className="mt-8 text-center text-muted-foreground text-sm">
           <p className="flex items-center justify-center gap-2">
-            <span className="text-primary">©</span> 2024
+            <span className="text-primary">©</span> Aryaziddan 2025
             <span className="text-secondary">•</span>
-            Built with <span className="text-accent animate-pulse">♥</span> in the future
+            Built with Cursor and Loveable
           </p>
         </div>
       </div>

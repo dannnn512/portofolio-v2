@@ -2,62 +2,9 @@ import { useState } from "react";
 import { ExternalLink, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  thumbnail: string;
-  skills: string[];
-  tools: string[];
-  playStoreUrl?: string;
-  githubUrl?: string;
-  isRecent: boolean;
-}
-
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "E-Commerce Platform",
-    description: "Full-stack e-commerce solution with real-time inventory management",
-    thumbnail: "https://images.unsplash.com/photo-1557821552-17105176677c?w=400&h=300&fit=crop",
-    skills: ["React", "Node.js", "PostgreSQL"],
-    tools: ["Docker", "AWS", "Stripe"],
-    playStoreUrl: "#",
-    githubUrl: "#",
-    isRecent: true,
-  },
-  {
-    id: 2,
-    title: "AI Chat Application",
-    description: "Real-time chat app with AI-powered responses and analytics",
-    thumbnail: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=400&h=300&fit=crop",
-    skills: ["TypeScript", "Python", "WebSocket"],
-    tools: ["OpenAI", "Redis", "MongoDB"],
-    githubUrl: "#",
-    isRecent: true,
-  },
-  {
-    id: 3,
-    title: "Fitness Tracker",
-    description: "Mobile app for tracking workouts and nutrition goals",
-    thumbnail: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=300&fit=crop",
-    skills: ["React Native", "Firebase"],
-    tools: ["Expo", "Chart.js"],
-    playStoreUrl: "#",
-    isRecent: false,
-  },
-  {
-    id: 4,
-    title: "Portfolio Generator",
-    description: "SaaS tool for creating beautiful developer portfolios",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
-    skills: ["Next.js", "Tailwind"],
-    tools: ["Vercel", "Prisma"],
-    githubUrl: "#",
-    isRecent: false,
-  },
-];
+import { projects } from "@/data/projects";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const Projects = () => {
   const [showAll, setShowAll] = useState(false);
@@ -81,22 +28,46 @@ const Projects = () => {
             {displayedProjects.map((project) => (
               <div key={project.id} className="relative md:pl-20 group">
                 {/* Timeline dot */}
-                <div className="absolute left-6 top-6 w-5 h-5 rounded-full bg-tertiary border-4 border-background group-hover:scale-125 transition-transform duration-300 hidden md:block" 
-                  style={{ boxShadow: "0 0 20px hsl(140 100% 50% / 0.5)" }} 
+                <div className="absolute left-6 top-6 w-5 h-5 rounded-full bg-tertiary border-4 border-background group-hover:scale-125 transition-transform duration-300 hidden md:block"
+                  style={{ boxShadow: "0 0 20px hsl(140 100% 50% / 0.5)" }}
                 />
 
                 {/* Project card */}
                 <div className="bg-card border border-tertiary/30 rounded-sm overflow-hidden hover:border-tertiary transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(0,255,157,0.3)]">
                   <div className="grid md:grid-cols-[300px,1fr] gap-6">
-                    {/* Thumbnail */}
-                    <div className="relative overflow-hidden aspect-video md:aspect-auto">
-                      <img 
-                        src={project.thumbnail} 
-                        alt={project.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                    </div>
+                    {/* Thumbnail -> open gallery modal on click; no external redirect */}
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <button className="relative overflow-hidden h-40 md:h-48 lg:h-56 w-full text-left group">
+                          <img
+                            src={(project.thumbnails && project.thumbnails[0]) || project.thumbnail || "/placeholder.svg"}
+                            alt={project.title}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                        </button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-3xl p-0 overflow-hidden">
+                        <Carousel className="w-full">
+                          <CarouselContent>
+                            {(project.thumbnails && project.thumbnails.length > 0
+                              ? project.thumbnails
+                              : [project.thumbnail || "/placeholder.svg"]
+                            ).map((src, idx) => (
+                              <CarouselItem key={idx} className="h-[60vh]">
+                                <img src={src || "/placeholder.svg"} alt={`${project.title} - ${idx + 1}`} className="w-full h-full object-contain bg-black" />
+                              </CarouselItem>
+                            ))}
+                          </CarouselContent>
+                          <CarouselPrevious
+                            className="left-3 top-1/2 -translate-y-1/2 h-10 w-10 md:h-12 md:w-12 rounded-full bg-black/60 text-white border border-white/10 shadow-lg backdrop-blur-sm hover:bg-black/80 focus-visible:ring-2 focus-visible:ring-primary z-10"
+                          />
+                          <CarouselNext
+                            className="right-3 top-1/2 -translate-y-1/2 h-10 w-10 md:h-12 md:w-12 rounded-full bg-black/60 text-white border border-white/10 shadow-lg backdrop-blur-sm hover:bg-black/80 focus-visible:ring-2 focus-visible:ring-primary z-10"
+                          />
+                        </Carousel>
+                      </DialogContent>
+                    </Dialog>
 
                     {/* Content */}
                     <div className="p-6">
@@ -104,7 +75,7 @@ const Projects = () => {
                         <h3 className="text-2xl font-bold text-tertiary">{project.title}</h3>
                         <div className="flex gap-2">
                           {project.playStoreUrl && (
-                            <a 
+                            <a
                               href={project.playStoreUrl}
                               className="text-primary hover:text-primary/80 transition-colors"
                               target="_blank"
@@ -113,7 +84,7 @@ const Projects = () => {
                               <ExternalLink className="h-5 w-5" />
                             </a>
                           )}
-                          {project.githubUrl && (
+                          {/* {project.githubUrl && (
                             <a 
                               href={project.githubUrl}
                               className="text-secondary hover:text-secondary/80 transition-colors"
@@ -122,7 +93,7 @@ const Projects = () => {
                             >
                               <ExternalLink className="h-5 w-5" />
                             </a>
-                          )}
+                          )} */}
                         </div>
                       </div>
 
@@ -133,8 +104,8 @@ const Projects = () => {
                           <p className="text-sm text-primary font-semibold mb-2">Skills:</p>
                           <div className="flex flex-wrap gap-2">
                             {project.skills.map((skill) => (
-                              <Badge 
-                                key={skill} 
+                              <Badge
+                                key={skill}
                                 variant="outline"
                                 className="border-primary/50 text-primary"
                               >
@@ -148,8 +119,8 @@ const Projects = () => {
                           <p className="text-sm text-secondary font-semibold mb-2">Tools:</p>
                           <div className="flex flex-wrap gap-2">
                             {project.tools.map((tool) => (
-                              <Badge 
-                                key={tool} 
+                              <Badge
+                                key={tool}
                                 variant="outline"
                                 className="border-secondary/50 text-secondary"
                               >
