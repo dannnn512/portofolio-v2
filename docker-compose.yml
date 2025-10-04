@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:80" # akses: http://<IP_VPS>:3000
+      - "80:80" # akses: http://<IP_VPS>:3000
     environment:
       - TZ=Asia/Jakarta
     restart: unless-stopped
