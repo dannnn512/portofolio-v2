@@ -2,27 +2,27 @@ version: "3.9"
 
 services:
   web:
-    container_name: vite-react-web
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "80:80" # akses: http://<IP_VPS>:3000
-    environment:
-      - TZ=Asia/Jakarta
+    expose:
+      - "80"
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost || exit 1"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-    # Limit resource (berlaku di docker compose v2.17+ dengan cgroup)
-    # Kalau versi kamu gak dukung, hapus aja bagian ini.
-    mem_limit: "256m"
-    cpus: "0.75"
-    # logging opsional biar gak bengkak
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
+
+  caddy:
+    image: caddy:alpine
+    container_name: caddy-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:
